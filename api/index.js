@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
@@ -31,6 +32,9 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 })
 
 const port = 5000;
+app.use(cors({
+    origin: "http://localhost:3000"
+}))
 
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);

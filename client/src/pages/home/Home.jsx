@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await axios.get("/posts" );
+      const response = await axios.get("http://localhost:5000/api/posts" );
       setPost(response.data);
     };
     fetchPost();
