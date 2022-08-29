@@ -1,29 +1,27 @@
+import { Link } from "react-router-dom";
 import "./post.css";
 
-const Post = () => {
+const Post = ({ post }) => {
+  // Received props from posts component after mapping through all post from api
   return (
+    // Displaying all post content from api to their respective place
     <div className="post">
-      <img
-        className="postImg"
-        src="https://cdn.pixabay.com/photo/2022/08/21/21/24/blackandwhite-7402145_960_720.jpg"
-        alt=""
-      />
+      {post.photo && <img className="postImg" src={post.photo} alt="" />}
       <div className="postInfo">
         <div className="postCats">
-          <div className="postCat">Music</div>
-          <div className="postCat">Life</div>
+          {post.categories.map((catNames) => (
+            <div className="postCat">{catNames.name}</div>
+          ))}
         </div>
-        <div className="postTitle">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-        </div>
+        <Link to={`/post/${post._id}`} className="link">
+          <div className="postTitle">{post.title}</div>
+        </Link>
         <hr />
-        <div className="postDate">1 hour ago</div>
+        <div className="postDate">
+          {new Date(post.createdAt).toDateString()}
+        </div>
       </div>
-      <div className="postDescription">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum incidunt
-        ullam accusamus voluptate maiores consequatur odio, dolore ex explicabo
-        sequi, velit labore porro ipsum illo quo aspernatur placeat libero eos.
-      </div>
+      <div className="postDescription">{post.desc}</div>
     </div>
   );
 };

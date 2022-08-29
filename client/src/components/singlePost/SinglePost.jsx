@@ -1,19 +1,35 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from 'axios'
+import { Link, useLocation } from "react-router-dom";
 import "./singlePost.css";
 
 const SinglePost = () => {
+  const location = useLocation()
+  const path = location.pathname.split('/')[2];
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get('/posts/' + path)
+      setPost(res.data)
+    }
+    getPost()
+  }, [path]);
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
+        {post.photo && (
+
         <img
           className="singlePostImg"
-          src="https://cdn.pixabay.com/photo/2022/08/11/14/28/woman-7379683_960_720.jpg"
+          src={post.photo}
           alt=""
         />
+        )}
         <h1 className="singlePostTitle">
+          {post.title}
           {/* link to acticle/post page */}
           <Link className='link' to='/post/:postId'>sinegle</Link>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
           <div className="singlePostEdit">
             <i className="singlePostIcon fa-solid fa-pen-to-square"></i>
             <i className="singlePostIcon fa-solid fa-trash-can"></i>
@@ -21,21 +37,15 @@ const SinglePost = () => {
         </h1>
         <div className="singlePostInfo">
           <div className="singlePostAuthor">
-            Author: <b>Carly N</b>
+            Author: 
+            <Link to={`/?user=${post.username}`} className='link'>
+              <b>{post.username}</b>
+            </Link>
           </div>
-          <div className="singlePostDate">1 hour ago</div>
+          <div className="singlePostDate">{new Date (post.createdAt).toDateString}</div>
         </div>
         <div className="singlePostDescription">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse
-          consectetur maxime quos, deserunt voluptates iure nisi ipsa reiciendis
-          vel. Sit illo ipsa eos facere iste. Laboriosam iure consequuntur
-          corporis enim. Lorem, ipsum dolor sit amet consectetur adipisicing
-          elit. Esse consectetur maxime quos, deserunt voluptates iure nisi ipsa
-          reiciendis vel. Sit illo ipsa eos facere iste. Laboriosam iure
-          consequuntur corporis enim. Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Esse consectetur maxime quos, deserunt voluptates
-          iure nisi ipsa reiciendis vel. Sit illo ipsa eos facere iste.
-          Laboriosam iure consequuntur corporis enim.
+          {post.desc}
         </div>
       </div>
     </div>
