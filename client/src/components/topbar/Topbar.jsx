@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../../context/context";
 import "./topbar.css";
 
 const Topbar = () => {
-  const user = false;
+  // const user = false;
+  const { user, dispatch } = useContext(Context)
+
+  const handleLogOut = () => {
+    dispatch({type: 'LOGOUT'})
+  }
   return (
     <div className="top">
       <div className="topLeft">
@@ -33,7 +39,7 @@ const Topbar = () => {
               WRITE
             </Link>
           </li>
-          <li className="topListItem">{user && "LOGOUT"}</li>
+          <li className="topListItem" onClick={handleLogOut}>{user && "LOGOUT"}</li>
         </ul>
       </div>
       {/* Conditional rendering base on if user is login or not */}
@@ -41,14 +47,14 @@ const Topbar = () => {
         {user ? (
           <img
             className="topImg"
-            src="https://cdn.pixabay.com/photo/2021/12/22/03/11/self-care-6886599_960_720.jpg"
+            src={user.profilePic}
             alt=""
           />
         ) : (
           <ul className="topList">
             <li className="topListItem">
               <Link className="link" to="/login">
-                LOGIC
+                LOGIN
               </Link>
             </li>
             <li className="topListItem">

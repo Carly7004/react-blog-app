@@ -6,11 +6,13 @@ import Write from "../src/pages/write/Write";
 import Setting from "../src/pages/settings/Setting";
 import Single from "../src/pages/single/Single";
 import Login from "../src/pages/login/Login";
+import { useContext } from "react";
+import { Context } from "./context/context";
 
 
 
 function App() {
-  const user = false;
+  const {user} = useContext(Context)
   return (
     <Router>
       <Topbar />

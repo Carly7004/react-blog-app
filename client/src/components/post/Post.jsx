@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import "./post.css";
 
 const Post = ({ post }) => {
+  const PF = 'http://localhost:5000/images'
   // Received props from posts component after mapping through all post from api
   return (
     // Displaying all post content from api to their respective place
     <div className="post">
-      {post.photo && <img className="postImg" src={post.photo} alt="" />}
+      {post.photo && <img className="postImg" src={PF + post.photo} alt="" />}
       <div className="postInfo">
         <div className="postCats" >
         </div>

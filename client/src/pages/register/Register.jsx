@@ -7,15 +7,24 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const response = await axios.post('http://localhost:5000/api/auth/register', {
-      username,
-      password,
-      email
-    })
-    console.log(response.data)
+    setError(false)
+    try {
+      
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
+        username,
+        password,
+        email
+      });
+  
+      response.data && window.location.replace('/login')
+      console.log(response.data)
+    } catch (error) {
+      setError(true)
+    }
   }
 
   return (
@@ -47,6 +56,7 @@ const Register = () => {
           Login
         </Link>
       </button>
+      {error && <div> Something went wrong</div>}
     </div>
   );
 };
